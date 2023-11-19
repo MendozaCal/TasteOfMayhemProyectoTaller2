@@ -36,7 +36,7 @@ public class MoveVegatables : MonoBehaviour
                 Movee();
             }
         }
-        if (gameObject.GetComponent<EnemyFollow>().DistancePlayer < gameObject.GetComponent<EnemyFollow>().DistanciaMin)
+        if (gameObject.GetComponent<EnemyFollow>().DistancePlayer < gameObject.GetComponent<EnemyFollow>().DistanciaMin && gameObject.CompareTag("EnemyFollow"))
         {
             if (Follow == true)
             {

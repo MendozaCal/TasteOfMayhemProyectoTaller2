@@ -2,22 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TomatoEspecial : MonoBehaviour
+public class TomateStuneador : MonoBehaviour
 {
-    [SerializeField] private GameObject player;
-    [SerializeField] private float DistanciaMin;
-    [SerializeField] private GameObject enemys;
+    [SerializeField] private LayerMask mask;
+    private GameObject player;
+    private void Start()
+    {
+        player = GameObject.FindWithTag("Player");
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
             Destroy(gameObject);
+
         }
     }
-    private void OnDestroy()
+    private void Stun()
     {
         player.GetComponent<MovePlayer>().canMove = false;
-        enemys.GetComponent<MoveVegatables>().MoveRandom = false;
-        enemys.GetComponent<MoveVegatables>().Follow = false;
+        Collider2D[] collider = Physics2D.OverlapCircleAll(transform.position, 5, mask);
+        foreach (Collider2D c in collider)
+        {
+            MoveVegetables M = c.GetComponent<MoveVegetables>();
+            M.Follow = false; M.MoveRandom = false;
+        }
     }
 }

@@ -1,21 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class MoveVegatables : MonoBehaviour
+public class MoveVegetables : MonoBehaviour
 {
     [SerializeField] private float Speed;
     private Vector2 RandomPosition;
     private float Distance = 2f;
     private Vector2 InicialPoint;
     private float timer = 0;
-    [SerializeField] public Transform player;
+    private GameObject player;
     [SerializeField] public bool Follow = true;
     [SerializeField] public bool MoveRandom = true;
     private void Start()
     {
         InicialPoint = transform.position;
         Direccion();
+        player = GameObject.FindWithTag("Player");
     }
     private void Direccion()
     {
@@ -41,7 +43,6 @@ public class MoveVegatables : MonoBehaviour
             if (Follow == true)
             {
                 gameObject.GetComponent<EnemyFollow>().followPlayer();
-
             }
         }
         else
@@ -75,9 +76,12 @@ public class MoveVegatables : MonoBehaviour
     }
     IEnumerator VegetablesMove()
     {
-        yield return new WaitForSeconds(5);
-        Follow = true;
-        MoveRandom = true;
+        if (MoveRandom != true && Follow == true)
+        {
+            yield return new WaitForSeconds(5);
+            Follow = true;
+            MoveRandom = true;
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -88,4 +92,5 @@ public class MoveVegatables : MonoBehaviour
         }
     }
 }
+
 

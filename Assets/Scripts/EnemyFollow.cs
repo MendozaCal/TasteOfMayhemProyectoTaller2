@@ -1,16 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 public class EnemyFollow : MonoBehaviour
 {
     public float DistancePlayer;
-    [SerializeField] private Transform player;
-
+    private GameObject player;
     [SerializeField] public float DistanciaMin;
     [SerializeField] public float Speed;
+    private void Start()
+    {
+        player = GameObject.FindWithTag("Player");
+    }
     void Update()
     {
-        DistancePlayer = Vector2.Distance(transform.position, player.position);
+        DistancePlayer = Vector2.Distance(transform.position, player.transform.position);
     }
     private void OnDrawGizmos()
     {
@@ -18,6 +22,6 @@ public class EnemyFollow : MonoBehaviour
     }
     public void followPlayer()
     {
-        transform.position = Vector2.MoveTowards(transform.position, player.position, Speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, Speed * Time.deltaTime);
     }
 }
